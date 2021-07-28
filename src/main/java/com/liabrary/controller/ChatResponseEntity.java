@@ -1,9 +1,11 @@
 package com.liabrary.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -110,6 +112,46 @@ public class ChatResponseEntity {
 		}
 
 		return ResponseEntity.ok(cn);
+	}
+	
+	
+	@GetMapping("/user/chat/refresh/users")
+	public ResponseEntity<?> chatusers(Principal principal){
+		
+		String userName=principal.getName();
+		User user=userRepository.findByUsername(userName);
+		
+
+		
+		Set<User> sendersAndReceivers=chatMessageRepository.receivers(user);
+		sendersAndReceivers.addAll(chatMessageRepository.senders(user));
+		if(sendersAndReceivers.contains(user)) sendersAndReceivers.remove(user);
+		List<User> sendersAndReceiversList=new ArrayList<>();
+		for (User u: sendersAndReceivers) {
+			sendersAndReceiversList.add(u);
+        }
+		
+
+		return ResponseEntity.ok(sendersAndReceiversList);
+	}
+	
+	@GetMapping("/user/chat/refresh/users/count")
+	public ResponseEntity<?> countchatusers(Principal principal){
+		
+		String userName=principal.getName();
+		User user=userRepository.findByUsername(userName);
+		
+		int count=0;
+		
+		Set<User> sendersAndReceivers=chatMessageRepository.receivers(user);
+		sendersAndReceivers.addAll(chatMessageRepository.senders(user));
+		if(sendersAndReceivers.contains(user)) sendersAndReceivers.remove(user);
+		for (User u: sendersAndReceivers) {
+			count++;
+        }
+		
+
+		return ResponseEntity.ok(count);
 	}
 
 }

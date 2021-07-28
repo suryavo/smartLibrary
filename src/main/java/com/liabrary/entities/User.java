@@ -23,6 +23,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @EnableWebMvc
 @Entity
 @Table(name="USER")
@@ -74,6 +76,7 @@ public class User {
 	
 	private String role;
 	
+	@JsonIgnore
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="user")
 	private List<BookStock> user_borrows=new ArrayList<>();
 	public User() {

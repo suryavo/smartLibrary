@@ -117,14 +117,76 @@ const reviewto=(book_id)=>{
 }
 
 
+const refreshusers=(receiverid)=>{
 
+		let url=`http://localhost:8080/user/chat/refresh/users`;
+		fetch(url)
+		.then((response)=>{
+			return response.json();
+		})
+		.then((data)=>{
+			let text=`<div class="">`
+			data.forEach((sendersAndReceivers)=>{
 
+				
+				
+				/*<div class="senderAndReceiver" th:classappend="${sr.user_id==receiver.user_id?'activechat':'otherchat'}">
+	<img class="profile-image chat-avatar" th:src="@{'/images/'+${sr.image}}" alt="avatar"/>
+	<a  th:href="@{'/user/chat/'+${sr.user_id}}" class="chat" id="click-to-chat" ><span th:text="${sr.user_name}"></span></a>
+	</div>
+	
+		<div th:each="sr: ${sendersAndReceiversList}" >
+	<div class="senderAndReceiver" th:classappend="${sr.user_id==receiver.user_id?'activechat':'otherchat'}">
+	<img class="profile-image chat-avatar" th:src="@{'/images/'+${sr.image}}" alt="avatar"/>
+	<a  th:href="@{'/user/chat/'+${sr.user_id}}" class="chat" id="click-to-chat" ><span th:text="${sr.user_name}"></span></a>
+	</div>
+	</div>*/
+	
+	
+				text+=`<div class='${sendersAndReceivers.user_id==receiverid?'activechat':'otherchat'}'>`
+				text+=`<img class='profile-image chat-avatar' src='/images/${sendersAndReceivers.image}' alt='avatar'/>`
+				text+=`<a href='/user/chat/${sendersAndReceivers.user_id}' class='chat' id='click-to-chat'>${sendersAndReceivers.user_name}</a>`
+				text+=`</div>`
 
+			});
+			
+			text+=`</div>`
+			console.log(text);
+
+			$(".messageusers").html(text);
+			$(".messageusers").show();
+		});
+		
+	
+
+	
+}
+
+var usercount=0
+var prevusercount=0;
+function getcount(){
+	let url=`http://localhost:8080/user/chat/refresh/users/count`;
+	fetch(url)
+		.then((response)=>{
+			return response.json();
+		})
+		.then((data)=>{
+			
+			usercount=data;
+			if(usercount!=prevusercount){
+				prevusercount=usercount;
+				refreshusers(receiverid);
+			}
+
+		});
+	
+}
 
 
 var count=0;
 var max=0;
 const refreshchat=(to_user, count)=>{
+	getcount();
 	var val=0;
 count++;
 if(count<3){
@@ -156,9 +218,6 @@ if(count<3){
 			$(".chats").html(text);
 			$(".chats").show();
 			
-			console.log(val);
-		console.log(max);
-		console.log(count);
 		if(val!=max){
 				scroll();
 				max=val;
@@ -167,7 +226,7 @@ if(count<3){
 		
 		
 		
-		$("#messageusers").load();
+		$("#wrapperchat").load();
   setTimeout(function() {
     refreshchat(to_user, count);
   }, 400);
@@ -216,6 +275,7 @@ submitMessage.addEventListener('click', function(){
 
 window.addEventListener('load', function() {
     refreshchat(receiverid, 0);
+    refreshusers(receiverid);
 });
 
 function enablechatbutton(){
@@ -232,4 +292,22 @@ function scroll(){
 	var chatHistory = document.getElementById("chatbody");
 		chatHistory.scrollTop = chatHistory.scrollHeight;
 }
+
+
+
+
+
+
+/*---------------------------------NOTIFICATION-------------------------------------------*/
+
+
+
+
+
+
+
+
+
+
+
 

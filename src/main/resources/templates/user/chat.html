@@ -9,19 +9,11 @@
 
 <section>
 
-<div class="wrapperchat">
+<div class="wrapperchat" id="wrapperchat">
 
 <input th:value="${receiver.user_id}" id="receiver" style="display: none; visibility:hidden"/>
 
-<div class="messageusers" style="overflow-y: scroll;">
-	
-	<div th:each="sr: ${sendersAndReceiversList}" >
-	<div class="senderAndReceiver" th:classappend="${sr.user_id==receiver.user_id?'activechat':'otherchat'}">
-	<img class="profile-image chat-avatar" th:src="@{'/images/'+${sr.image}}" alt="avatar"/>
-	<a  th:href="@{'/user/chat/'+${sr.user_id}}" class="chat" id="click-to-chat" ><span th:text="${sr.user_name}"></span></a>
-	</div>
-	</div>
-	
+<div class="messageusers" id="messageusers" style="overflow-y: scroll;">
 </div>
 
 

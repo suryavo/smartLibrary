@@ -62,7 +62,6 @@ public class ChatController {
 		List<User> sendersAndReceiversList=new ArrayList<>();
 		for (User u: sendersAndReceivers) {
 			sendersAndReceiversList.add(u);
-			System.out.println(u);
         }
 		
 		ChatNotification cn=this.chatNotificationRepository.findChatNotificationBySenderAndReceiver(to_user, user.getUser_id());
