@@ -69,9 +69,52 @@ const searchonkeyup=()=>{
 
 
 
+const releaseto=(book_id)=>{
+	
+	let txt=`.release-button`;
+	txt+=`${book_id}`;
+	let releaseto=`.release-to-user`;
+	releaseto+=`${book_id}`;
+	
+	
+	if($(txt).is(":visible")){
+		$(txt).css("display" , "none");
+		$(txt).css("visibility" , "hidden");
+		$(releaseto).css("display" , "block");
+		$(releaseto).css("visibility" , "visible");
+		console.log(txt);
+	}
+	else{
+		$(releaseto).css("display" , "none");
+		$(releaseto).css("visibility" , "hidden");
+		$(txt).css("display" , "block");
+		$(txt).css("visibility" , "visible");
+	}
+}
 
 
-
+const reviewto=(book_id)=>{
+	
+	let txt=`.review-button`;
+	txt+=`${book_id}`;
+	let reviewto=`.review-field`;
+	reviewto+=`${book_id}`;
+	
+	
+	if($(txt).is(":visible")){
+		$(txt).css("display" , "none");
+		$(txt).css("visibility" , "hidden");
+		$(reviewto).css("display" , "block");
+		$(reviewto).css("visibility" , "visible");
+		console.log(txt);
+	}
+	else{
+		$(reviewto).css("display" , "none");
+		$(reviewto).css("visibility" , "hidden");
+		$(txt).css("display" , "block");
+		$(txt).css("visibility" , "visible");
+	}
+}
 
 
 
