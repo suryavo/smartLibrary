@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org" th:replace="/admin/adminbase::Layout(~{::section})">
+<head>
+	<meta charset="UTF-8"/>
+	<title>This is my book entry page</title>
+</head>
+<body>
+
+<section>
+<div class="entrybook-card">
+
+			<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
+  			<p class="text-center" th:text="${session.message.message}"></p>
+  			<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+			</div>
+
+			
+<h1 class="heading text-left">Assign Books</h1>
+
+
+<form novalidate action="" th:action="@{/admin/assign-book/do_assign}" method="post" th:object="${assignbook}">
+
+
+<div class="row">
+  <div class="mb-3 col">
+    <label for="book_name" class="form-group">User Id</label>
+    <input th:value="${assignbook.user_id}" name="user_id" type="text" class="form-control" id="user_id" aria-describedby="user_id" placeholder="Enter the User's Id to assign'" required>
+  </div>
+  <div class="mb-3 col">
+    <label for="author" class="form-group">Unique Book Id</label>
+    <input th:value="${assignbook.unique_book_id}" name="unique_book_id" type="text" class="form-control" id="unique_book_id" aria-describedby="unique_book_id" placeholder="Enter the Unique Book Id here" required>
+  </div>
+
+
+
+<div class="form-group">
+<button type="submit" class="btn btn-primary" id="submit">Submit</button>
+</div>
+
+
+
+</form>
+</div>
+</section>
+
+</body>
+</html>

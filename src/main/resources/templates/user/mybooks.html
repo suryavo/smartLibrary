@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org" th:replace="/user/userbase::Layout(~{::section})">
+<head>
+	<meta charset="UTF-8"/>
+	<title>This is my book entry page</title>
+</head>
+<body>
+
+<section>
+
+<div>
+<form th:action="@{/user/mybooks/released-books}" >
+<button type="submit" class="released-books btn btn-primary">Switch to Released Books</button>
+</form>
+</div>
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
+<div th:each="book: ${bookStock}">
+	<div class="mybookscard">
+		<div class="mybookscardbody">
+				<div class="col md-4">
+					<img class="card-img-top" th:src="@{'/images/'+${book.book.image}}"/>
+					<div class="mybooks-text-body">
+					<h3 th:text="${book.book.book_name}">text</h3>
+					<h6>Publisher:<span class="mybooks-text" th:text="${book.book.publisher}"></span></h6>
+					<h6>Author:<span class="mybooks-text" th:text="${book.book.author}"></span></h6>
+					<h6>Domain:<span class="mybooks-text" th:text="${book.book.domain}"></span></h6>
+
+					
+					<button th:onclick="|releaseto('${book.unique_book_id}')|" type="button" th:class="*{'release-button'+{book.unique_book_id}+' release-button btn btn-primary'}"  style="display: block; visibility: visible;" >
+					  Release Book
+					</button>
+					<form method="post" th:action="@{'/user/mybooks/release-book/'+${book.unique_book_id}}">
+					<div class="input-block form-group" th:id="*{'release-to-user'+{book.unique_book_id}}" th:class="*{'release-to-user'+{book.unique_book_id}}" name="*{'release-to-user'+{book.unique_book_id}}" style="display: none; visibility: hidden;">
+					<input 
+					name="release-to-user" 
+					type="text" 
+					class="release-to-user form-control" 
+					id="release-to-user" 
+					aria-describedby="release-to-user" 
+					placeholder="Enter the user Id" 
+					required>
+						<div class="row">
+							<div class="col"><button th:onclick="|releaseto('${book.unique_book_id}')|" type="button" class="release-button btn btn-danger">cancel</button></div>
+							<div class="col create-otp"><button type="submit" class="release-button btn btn-primary">Release Book</button></div>
+						</div>
+                    </div>
+                       
+                    
+					</form>
+
+					
+					</div>
+				</div>
+		</div>
+	</div>
+</div>
+</div>
+
+
+</section>
+
+
+</body>
+</html>

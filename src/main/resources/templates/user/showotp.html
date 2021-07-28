@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org" th:replace="/user/userbase::Layout(~{::section})">
+<head>
+	<meta charset="UTF-8"/>
+	<title>This is my book entry page</title>
+</head>
+<body>
+
+<section>
+
+<div class="text-center">
+<div th:each="otpdetails :${receiver_otp_details}">
+	<div class="card">
+		<div class="cardbody">
+			<div class="row">
+				<div class="col">
+					<h6>Book Id:<span th:text="${otpdetails.book_id}"></span></h3>
+				</div>
+				<div class="col">
+					<h6>Receive From:<span th:text="${otpdetails.sender_user_id}"></span></h3>
+				</div>
+				<div class="col">
+					<h6>OTP:<span th:text="${otpdetails.otp}"></span></h3>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</div>
+
+</section>
+
+
+</body>
+</html>

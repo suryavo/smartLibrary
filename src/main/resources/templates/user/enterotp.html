@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org" th:replace="/user/userbase::Layout(~{::section})">
+<head>
+	<meta charset="UTF-8"/>
+	<title>This is my book entry page</title>
+</head>
+<body>
+
+<section>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-4 offset-md-4">
+			<div class="mycard" th:object="${otpVerification}">
+	
+			<form novalidate action="" th:action="@{'/user/mybooks/compete-transaction/'+${otpVerification.book_id}+'/'+${otpVerification.receiver_user_id}}" method="post" >	
+						
+				<!--name-->
+				  <div class="form-group">
+    				<input 
+    				name="otp-input"
+    				type="text" 
+    				class="form-control" 
+    				id="otp-input" 
+    				aria-describedby="otp-input"
+    				placeholder="Enter the OTP here"
+    				required
+    				/>
+  
+    				
+  				</div>
+
+  				<div class="container text-center">
+  				<button type="submit" class="btn btn-primary">submit OTP</button>
+  				</div>
+  				
+  				
+  				</form>
+			
+			</div>		
+		</div>	
+	</div>
+</div>
+
+</section>
+
+
+</body>
+</html>

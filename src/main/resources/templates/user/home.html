@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org" th:replace="/user/userbase::Layout(~{::section})">
+<head>
+	<meta charset="UTF-8"/>
+	<title>This is my first home page</title>
+</head>
+<body>
+
+<section>
+<div class="text-center">
+<h1>Name: <span th:text="${user.user_name}"></span></h1>
+<h2>Roll_no: <span th:text="${user.roll_no}"></span></h2>
+<h2>Mobile: <span th:text="${user.mob_no}"></span></h2>
+<h2>Active: <span th:text="${user.profile_activity}"></span></h2>
+<h2>Department: <span th:text="${user.department}"></span></h2>
+<h2>Year: <span th:text="${user.year}"></span></h2>
+<h2>Expiry: <span th:text="${user.expiry_date}"></span></h2>
+</div>
+
+</section>
+
+</body>
+</html>

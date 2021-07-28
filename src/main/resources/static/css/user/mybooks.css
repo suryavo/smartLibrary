@@ -1,0 +1,27 @@
+.mybookscard{
+	margin-top: 20px;
+	border-radius: 10px;
+	box-shadow: 1px 1px 10px rgb(226, 226, 226);
+}
+.mybooks-text-body{
+	margin-top: 20px;
+	padding: 20px;
+}
+.release-button{
+	width: 100%;
+	margin-top: 20px;
+}
+.mybookscard span{
+	padding: 15px;
+}
+.card-img-top{
+	height: 350px;
+	border-radius: 10px 10px 0px 0px;
+}
+.release-to-user{
+	margin-top: 20px;
+}
+.review-button{
+	width: 100%;
+	margin-top: 20px;
+}

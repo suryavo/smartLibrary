@@ -1,0 +1,109 @@
+.book-image{
+	width: 350px;
+	height: 350px;
+	margin: 20px 0px 50px 0px;
+	border-radius: 10px;
+	box-shadow: 1px 1px 10px rgb(235, 235, 235);
+}
+
+.book-description{
+	padding:20px 0px 20px 0px;
+	color: rgb(139, 139, 139);
+}
+
+.showbook-col{
+	margin-left: 30px;
+
+}
+@media only screen and (max-width: 600px){
+	.showbook-col{
+	margin-left: 0px;
+}
+}
+
+.userscard{
+	width:70%;
+	margin-left: 130px;
+	margin-top: 20px;
+	border-radius: 10px;
+	box-shadow: 1px 1px 10px lightgrey;
+}
+@media only screen and (max-width: 1700px){
+	.userscard{
+	width:100%;
+	margin-left: 0px;
+	border-radius: 10px;
+	box-shadow: 1px 1px 10px lightgrey;
+}
+.userscardbody{
+	padding: 0px;
+}
+}
+.userscardbody{
+	padding: 20px;
+}
+.usercard-header{
+	padding: 15px 0px;
+	margin-bottom: 20px;
+	border-radius: 10px 10px 0px 0px;
+	background: rgb(13, 110, 253);
+}
+.profile-image{
+	width: 40px;
+	width: 40px;
+	border-radius: 50%;
+}
+.reviews{
+	padding: 20px 40px;
+}
+.profile-pic{
+	margin-right: 10px;
+	width: 20px;
+	width: 20px;
+	border-radius: 50%;
+}
+.black-divider{
+	height:.5px;
+	width: 100%;
+	background: rgb(0, 0, 0);
+	margin: 50px 0px;
+	opacity: 0.1;
+}
+.reviewer-name{
+	font-size: 18px;
+	font-weight: 500;
+}
+.user-review-card{
+	margin-bottom: 10px;
+}
+
+
+/*----------------------------------star rating */
+
+.stars-outer {
+  position: relative;
+  display: inline-block;
+}
+
+.stars-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+}
+
+.stars-outer::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #ccc;
+}
+
+.stars-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: rgb(254, 167, 5);
+}

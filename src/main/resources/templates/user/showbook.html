@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<!-------------------USER SHOWBOOK---------------------------------------------->
+
+
+<html lang="en" xmlns:th="http://www.thymeLeaf.org" th:replace="/user/userbase::Layout(~{::section})">
+<head>
+	<meta charset="UTF-8"/>
+	<title>This is my book entry page</title>
+</head>
+<body>
+
+<section>
+
+<div class="show-book">
+<div class="row">
+
+	<div class="col showbook-col">
+		<img class="book-image" th:src="@{'/images/'+${book.image}}"/>
+		<h2><span th:text="${book.book_name}"></span></h5>
+		
+		
+		
+		<div id="${book.book_id}" class="${book.book_id}"  >
+		<div class="stars-outer">
+            <div class="stars-inner" th:style=" 'width: ' + ${percentageRating} + 'px;'"></div>
+        </div>
+        <span class="number-rating" th:text="${averageRating}"></span>
+		</div>
+
+		
+		
+		<h6 class="book-description"><span th:text="${book.description}"></span></h6>
+		<h5>Publisher:<span th:text="${book.publisher}"></span></h5>
+		<h5>Author:<span th:text="${book.author}"></span></h5>
+		<h5>Domain:<span th:text="${book.domain}"></span></h5>
+		<h7>count of copies in library: <span th:text="${book_count_in_library}"></span></h7>
+		
+		<div class="divider black-divider"></div>
+		
+		
+<h3>Students' Reviews</h3>		
+<div>
+<div th:each="rrl: ${ratingReviewList}" >
+				
+		<div class="card user-review-card">
+		<div class="cardbody reviews">
+				<div class="user-pic-name"><img class="profile-pic" th:src="@{'/images/'+${rrl.user.image}}"/><span class="reviewer-name" th:text="${rrl.user.user_name}"></span></div>
+				
+				<div>
+						<div class="stars-outer">
+		            	<div class="stars-inner" th:style=" 'width: ' + ${rrl.rating} + 'px;'"></div>
+		        		</div>
+		        		<span class="number-rating" th:text="${rrl.rating}*5/100"></span>
+				</div>
+				
+				<h7 th:text="${rrl.review}"></h7>
+				</div>
+				</div>
+		</div>
+		</div>
+		
+		
+	</div>
+	
+	<div class="col showbook-col">
+	
+	<div class="userscard">
+		<div class="usercard-header text-center" >
+		<h5 style="color: white;">users having a copy</h5>
+		</div>
+			  
+		<div class="userscardbody">	  
+		<table class="table">
+			  
+			  <tbody>
+			    <tr th:each="bs :${newbookstock}">
+			      <td><img class="profile-image" th:src="@{'/images/'+${bs.user.image}}" alt="avatar"/></td>
+			      <td th:text="${bs.user.user_name}">Otto</td>
+			      
+			      
+			      <td>
+			      <form th:action="@{'/user/chat/'+${bs.user.user_id}}" >
+			      <button th:if="${bs.user.user_id!=user.user_id}" type="submit" class="btn btn-primary">send a message</button>
+			      </form>
+			      </td>
+			      
+			    </tr>
+			  </tbody>
+			</table>
+		</div>
+	</div>
+	</div>
+
+
+
+</div>
+</div>
+
+
+</section>
+
+</body>
+</html>

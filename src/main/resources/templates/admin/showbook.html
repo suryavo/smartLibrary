@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+
+<!-------------------ADMIN SHOWBOOK---------------------------------------------->
+
+
+
+<html lang="en" xmlns:th="http://www.thymeLeaf.org" th:replace="/admin/adminbase::Layout(~{::section})">
+<head>
+	<meta charset="UTF-8"/>
+	<title>This is my book entry page</title>
+</head>
+<body>
+
+<section>
+
+<img class="book_image" th:src="@{'/images/'+${book.image}}"/>
+<h1 th:text="${book.book_name}">text</h1>
+<h6 th:text="${book.publisher}">text</h6>
+<h6 th:text="${book.author}">text</h6>
+<h6 th:text="${book.description}">text</h6>
+<h6 th:text="${book.domain}">text</h6>
+
+
+</section>
+
+</body>
+</html>

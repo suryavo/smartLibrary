@@ -1,0 +1,127 @@
+.wrapperchat{
+	min-height: 750px;
+	max-height: 750px;
+	display: flex;
+	margin: auto;
+	width: 1050px;
+	border-radius: 10px;
+	box-shadow: 1px 1px 10px lightgrey;
+}
+
+/* hide scroll bar*/
+
+.chats::-webkit-scrollbar {
+  display: none;
+}
+
+.chats{
+  -ms-overflow-style: none; 
+  scrollbar-width: none;  
+}
+.messageusers::-webkit-scrollbar {
+  display: none;
+}
+
+.messageusers{
+  -ms-overflow-style: none; 
+  scrollbar-width: none;  
+}
+
+/* hide scroll bar*/
+
+
+.senderAndReceiver{
+	margin-bottom: 10px;
+
+}
+.activechat{
+	background: rgb(214, 214, 214);
+	padding: 10px 20px;
+}
+.otherchat{
+	padding: 2px 20px;
+}
+.chat{
+	text-decoration: none;
+	color: black;
+}
+.chats{
+	margin-bottom: 10px;
+}
+.messagecard-header{
+	display: flex;
+	background: rgb(13, 110, 253);
+	min-height: 60px;
+	padding: 20px;
+	border-radius: 0px 10px 0px 0px;
+	margin-bottom: 10px;
+}
+.messageusers{
+	padding-top: 20px;
+	background: rgb(235, 235, 235);
+	flex: 1;
+	border-radius: 10px 0px 0px 10px;
+}
+.messagecard{
+	
+	background: white;
+	flex: 3;
+	border-radius: 0px 10px 10px 0px;
+	
+}
+.messagecardbody{
+	
+}
+.chat-avatar{
+	border-radius: 50%;
+	border: 2px solid white;
+	margin-right: 10px;
+}
+.chat-messages-display-single-receiver{
+	background: rgb(223, 223, 223);
+	color: rgb(0, 0, 0);
+	vertical-align: top;
+	padding: 5px 20px;
+	border-radius: 30px;
+	display: table;
+	clear: both;
+	float: left;
+	text-decoration: none;
+	margin: 2px 30px ;
+
+}
+.chat-messages-display-single-sender{
+	background: rgb(13, 110, 253);
+	color: rgb(255, 255, 255);
+	vertical-align: top;
+	padding: 5px 20px;
+	border-radius: 30px;
+	display: table;
+	clear: both;
+	float: right;
+	text-decoration: none;
+	margin: 2px 30px ;
+
+}
+.msg-input{
+	padding: 60px;
+	background: rgb(215, 215, 215);
+	display: flex;
+	border-radius: 0px 0px 10px 0px;
+}
+.send-message-btn{
+	border-radius: 0px 50px 50px 00px;
+	flex:1;
+}
+.chatmessage{
+	
+	border-radius: 50px 0px 0px 50px;
+	flex: 4;
+}
+.blank-message-card{
+	background: rgb(13, 110, 253);
+	color: white;
+	text-align: center;
+	
+}
+

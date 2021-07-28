@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org" th:replace="/admin/adminbase::Layout(~{::section})">
+<head>
+	<meta charset="UTF-8"/>
+	<title>This is my book entry page</title>
+</head>
+<body>
+
+<section>
+
+<div th:if="${currentpage==page}" class="card">
+	<div class="card-body">
+
+<div class="row g-3 align-items-center">
+<h1 class="admin-library col heading text-left">Admin Library</h1>
+
+
+<!----------------------Search------------------------>
+  <div class="search-container col">
+    <input onkeyup="searchonkeyup()" th:value="${query}"  id="search_book"  name="search_book" type="text" class="form-control"  aria-describedby="search_book" placeholder="Enter the book name here" >
+    <div class="search-result">
+    
+    
+    
+    </div>
+  </div>
+
+  <div class="col">
+  	<button onclick="search()" class="search-button btn btn-primary" >search book</button>
+  </div>
+  
+  
+</div>
+
+
+
+	<table class="table">
+			  <thead>
+			    <tr>
+			      <th scope="col">Sl.No</th>
+			      <th scope="col">Book Name</th>
+			      <th scope="col">Author</th>
+			      <th scope="col">Publisher</th>
+			      <th scope="col">Edition</th>
+			      <th scope="col">Actions</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr th:each="b :${books}">
+			      <th scope="row" th:text="${b.book_id}">1</th>
+			      <td th:text="${b.book_name}">mark</td>
+			      <td th:text="${b.author}">Otto</td>
+			      <td th:text="${b.publisher}">Otto</td>
+			      <td th:text="${b.edition}">Otto</td>
+			      <td>
+			      
+			      <form method="post" th:action="@{'/admin/update-book/'+${b.book_id}}">
+			      <button type="submit" class="btn btn-primary">edit details</button>
+			      </form>
+			      
+			      </td>
+			    </tr>
+			  </tbody>
+			</table>
+			
+			
+			
+			<nav th:if="${totalpages!=0}" aria-label="Page navigation example">
+			  <ul class="pagination">
+			  
+			  
+			    <li  th:if="${currentpage!=0}" class="page-item">
+			    
+			      <a th:href="@{'/admin/adminlibrary/'+${currentpage-1}}" class="page-link" href="#" aria-label="Previous">
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+			    </li>
+			    
+			    <li th:classappend="${currentpage==i-1?'active':''}"th:each="i: ${#numbers.sequence(1,totalpages)}"class="page-item"><a th:href="@{'/admin/adminlibrary/'+${i-1}}" class="page-link" href="#"><span th:text="${i}"></span></a></li>
+			    
+			    <li th:if="${currentpage+1!=totalpages}" class="page-item">
+			      <a class="page-link" th:href="@{'/admin/adminlibrary/'+${currentpage+1}}" aria-label="Next">
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+			    </li>
+			    
+			  </ul>
+			</nav>
+			
+
+			
+			
+			
+			
+	</div>
+</div>
+</section>
+
+</body>
+</html>

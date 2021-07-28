@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org" th:replace="/user/userbase::Layout(~{::section})">
+<head>
+	<meta charset="UTF-8"/>
+	<title>This is my book entry page</title>
+</head>
+<body>
+
+<section>
+
+
+<div>
+<form th:action="@{/user/mybooks}" >
+<button type="submit" class="current-books btn btn-primary">Switch to Current Books</button>
+</form>
+</div>
+
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
+<div th:each="book: ${releasedBookStock}">
+	<div class="mybookscard">
+		<div class="mybookscardbody">
+				<div class="col md-4">
+					<img class="card-img-top" th:src="@{'/images/'+${book.book.image}}"/>
+					<div class="mybooks-text-body">
+					<h3 th:text="${book.book.book_name}">text</h3>
+					<h6>Publisher:<span class="mybooks-text" th:text="${book.book.publisher}"></span></h6>
+					<h6>Author:<span class="mybooks-text" th:text="${book.book.author}"></span></h6>
+					<h6>Domain:<span class="mybooks-text" th:text="${book.book.domain}"></span></h6>
+
+					
+					<button th:onclick="|reviewto('${book.unique_book_id}')|" type="button" th:class="*{'review-button'+{book.unique_book_id}+' review-button btn btn-primary'}"  style="display: block; visibility: visible;" >
+					 Add Your Review
+					</button>
+					<form method="post" th:action="@{'/user/mybooks/add-review/'+${book.unique_book_id}}">
+					<div class="form-group" th:id="*{'review-field'+{book.unique_book_id}}" th:class="*{'review-field'+{book.unique_book_id}}" name="*{'review-field'+{book.unique_book_id}}" style="display: none; visibility: hidden;">
+					
+					<label for="rating" class="form-group">Rating</label>
+			    		<select class="form-control" name="rating" id="rating" required>
+			    					<option selected disabled value="">Give your honest rating</option>
+			      					<option class="form-control" value="1">1</option>
+			      					<option class="form-control" value="2">2</option>
+			      					<option class="form-control" value="3">3</option>
+			     					<option class="form-control" value="4">4</option>
+			      					<option class="form-control" value="5">5</option>
+			    		</select>
+					
+					
+					
+					<label for="review" class="form-group">Review</label>
+					<textarea name="review" id="review" class="form-control" cols="30" rows="10" placeholder="Enter your review" required></textarea>
+					
+					
+						<div class="row">
+							<div class="col"><button th:onclick="|reviewto('${book.unique_book_id}')|" type="button" class="review-button btn btn-danger">cancel</button></div>
+							<div class="col"><button type="submit" class="review-button btn btn-primary">Submit</button></div>
+						</div>
+                    </div>
+                       
+                    
+					</form>
+
+					
+					</div>
+				</div>
+		</div>
+	</div>
+</div>
+</div>
+
+
+</section>
+
+
+</body>
+</html>

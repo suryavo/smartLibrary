@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org" th:replace="/user/userbase::Layout(~{::section})">
+<head>
+	<meta charset="UTF-8"/>
+	<title>This is my book entry page</title>
+	
+</head>
+<body>
+
+<section>
+
+<div class="wrapperchat">
+
+<input th:value="${receiver.user_id}" id="receiver" style="display: none; visibility:hidden"/>
+
+<div class="messageusers" style="overflow-y: scroll;">
+	
+	<div th:each="sr: ${sendersAndReceiversList}" >
+	<div class="senderAndReceiver" th:classappend="${sr.user_id==receiver.user_id?'activechat':'otherchat'}">
+	<img class="profile-image chat-avatar" th:src="@{'/images/'+${sr.image}}" alt="avatar"/>
+	<a  th:href="@{'/user/chat/'+${sr.user_id}}" class="chat" id="click-to-chat" ><span th:text="${sr.user_name}"></span></a>
+	</div>
+	</div>
+	
+</div>
+
+
+
+<div class="messagecard blank-message-card" style="width: 50%;">
+
+<h1 style="line-height: 17;">Start a Conversation</h1>
+	
+</div>
+
+</div>
+
+</section>
+
+
+</body>
+</html>

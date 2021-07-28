@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org" th:replace="/user/userbase::Layout(~{::section})">
+<head>
+	<meta charset="UTF-8"/>
+	<title>This is my book entry page</title>
+	
+</head>
+<body>
+
+<section>
+
+<div class="wrapperchat">
+
+<input th:value="${receiver.user_id}" id="receiver" style="display: none; visibility:hidden"/>
+
+<div class="messageusers" style="overflow-y: scroll;">
+	
+	<div th:each="sr: ${sendersAndReceiversList}" >
+	<div class="senderAndReceiver" th:classappend="${sr.user_id==receiver.user_id?'activechat':'otherchat'}">
+	<img class="profile-image chat-avatar" th:src="@{'/images/'+${sr.image}}" alt="avatar"/>
+	<a  th:href="@{'/user/chat/'+${sr.user_id}}" class="chat" id="click-to-chat" ><span th:text="${sr.user_name}"></span></a>
+	</div>
+	</div>
+	
+</div>
+
+
+
+<div class="messagecard" style="width: 50%;">
+
+	
+	<div  class=" messagecard-header">
+	<img class="profile-image chat-avatar" th:src="@{'/images/'+${receiver.image}}" alt="avatar"/>
+	<h4><span th:text="${receiver.user_name}" style="color: white;"></span></h4>
+	</div>
+	
+<div class="messagecardbody">
+
+	<div id="chatbody" class="chats " style="overflow-y: scroll; height:580px;">
+	</div>
+	
+	
+
+	
+	
+	<div class="form-group msg-input" style="padding: 16px 30px;">
+	<label for="chatmessage" class="form-group"></label>
+	<input onkeyup="enablechatbutton()" type="text" name="chatmessage" id="chatmessage" class="form-control chatmessage" placeholder="write your message....." required/>
+	<button class="btn btn-primary send-message-btn" id="submitMessage" disabled>send</button>
+	</div>
+	
+	
+	
+
+
+</div>
+</div>
+
+</div>
+
+</section>
+
+
+</body>
+</html>

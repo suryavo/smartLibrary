@@ -1,0 +1,19 @@
+.search-button{
+	padding: 7px 20px;
+}
+.admin-library{
+	padding: 30px 20px 15px 20px;
+}
+.search-container{
+	position: relative;
+}
+.search-result{
+	position: absolute;
+	background: white;
+	display: none;
+	width: 97%;
+	padding: 10px;
+	border: 0px solid grey;
+	box-shadow: 1px 1px 10px rgb(147, 147, 147);
+	border-radius: 5px;
+}

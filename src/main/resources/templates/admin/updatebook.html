@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org" th:replace="/admin/adminbase::Layout(~{::section})">
+<head>
+	<meta charset="UTF-8"/>
+	<title>This is my book entry page</title>
+</head>
+<body>
+
+<section>
+<div class="entrybook-card">
+
+			<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
+  			<p class="text-center" th:text="${session.message.message}"></p>
+  			<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+			</div>
+			
+
+			
+			
+			
+
+			
+<h1 class="heading text-left">Update Book Details</h1>
+
+
+<form novalidate action="" th:action="@{'/admin/update-book/'+${book.book_id}+'/do-update'}" enctype="multipart/form-data" method="post" th:object="${book}">
+
+
+<div class="row">
+  <div class="mb-3 col">
+    <label for="book_name" class="form-group">Book Name</label>
+    <input th:value="${book.book_name}" name="book_name" type="text" class="form-control" id="book_name" aria-describedby="book_name" placeholder="Enter the book name here" th:classappend="${#fields.hasErrors('book_name')?'is-invalid':''}" required>
+    <div class="invalid-feedback" th:each="e :${#fields.errors('book_name')}" th:text="${e}"}></div>
+  </div>
+  <div class="mb-3 col">
+    <label for="author" class="form-group">Author</label>
+    <input th:value="${book.author}" name="author" type="text" class="form-control" id="author" aria-describedby="author" placeholder="Enter the Author name here" th:classappend="${#fields.hasErrors('author')?'is-invalid':''}" required>
+    <div class="invalid-feedback" th:each="e :${#fields.errors('author')}" th:text="${e}" }></div>
+  </div>
+  <div class="mb-3 col">
+    <label for="publisher" class="form-group">Publisher</label>
+    <input th:value="${book.publisher}" name="publisher" type="text" class="form-control" id="publisher" aria-describedby="publisher" placeholder="Enter the Publisher here" th:classappend="${#fields.hasErrors('publisher')?'is-invalid':''}" required>
+    <div class="invalid-feedback" th:each="e :${#fields.errors('publisher')}" th:text="${e}" }></div>
+  </div>
+</div>
+
+
+
+<div class="row">
+  <div class="mb-3 col">
+    	<label for="domain" class="form-group">Domain</label>
+    		<select th:field="${book.domain}" class="form-control" name="domain" id="domain" th:classappend="${#fields.hasErrors('domain')?'is-invalid':''}" required>
+    					<option selected disabled value="">select domain of the book</option>
+      					<option class="form-control" value="cse">CSE</option>
+      					<option class="form-control" value="ece">ECE</option>
+      					<option class="form-control" value="me">ME</option>
+     					<option class="form-control" value="ee">EE</option>
+      					<option class="form-control" value="it">IT</option>
+    		</select>
+    		<div class="invalid-feedback" th:each="e :${#fields.errors('domain')}" th:text="${e}" }></div>
+  </div>
+ <div class="mb-3 col">
+    <label  for="edition" class="form-group">Edition</label>
+    <input th:value="${book.edition}" name="edition" type="text" class="form-control" id="edition" aria-describedby="edition" placeholder="Enter the edition here" th:classappend="${#fields.hasErrors('edition')?'is-invalid':''}" required>
+    <div class="invalid-feedback" th:each="e :${#fields.errors('edition')}" th:text="${e}" }></div>
+  </div>
+
+  <div class="mb-3 col">
+  		<label for="book-image" class="form-group">Upload Book Image</label>
+	  <input th:value="${book.image}" type="file" id="book-image" class="form-control" name="book-image">
+  </div>
+  
+  <div class="mb-3 col">
+    <label for="book_count" class="form-group">Add Book Count</label>
+    <input th:value="0" name="book_count" type="text" class="form-control" id="book_count" aria-describedby="book_count" placeholder="Enter the book count you want to add" th:classappend="${#fields.hasErrors('book_count')?'is-invalid':''}" required>
+    <div class="invalid-feedback" th:each="e :${#fields.errors('book_count')}" th:text="${e}" }></div>
+  </div>
+  
+</div>
+
+<div class="form-group">
+<label for="description" class="form-group">Book Description</label>
+<textarea th:text="${book.description}" name="description" id="description" class="form-control" cols="30" rows="10" placeholder="Enter the book description" th:classappend="${#fields.hasErrors('description')?'is-invalid':''}" required></textarea>
+<div class="invalid-feedback" th:each="e :${#fields.errors('description')}" th:text="${e}" }></div>
+</div>
+
+<div class="form-group">
+<button type="submit" class="btn btn-primary" id="submit" >Update</button>
+<button type="reset" class="btn btn-warning" id="reset" >Reset</button>
+</div>
+
+
+
+</form>
+</div>
+</section>
+
+</body>
+</html>

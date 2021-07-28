@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org" th:replace="base::Layout(~{::section})">
+<head>
+	<meta charset="UTF-8"/>
+	<title>This is my first home page</title>
+</head>
+<body>
+
+<section>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-4 offset-md-4">
+			<div class="mycard">
+			
+			
+			
+			<div th:if="${session.message}" class="alert alert-danger" role="alert">
+  			<p class="text-center" th:text="${session.message.message}"></p>
+  			<th:block th.text="${#session.removeAttribute('message')}"></th:block>
+  			
+			</div>
+			
+			
+			
+			
+				<h1 class="text-center">Login</h1>
+			<form novalidate action="" th:action="@{/dologin}" method="post" th:object="${user}">	
+			
+			<div th:if="${param.error}" class="alert alert-danger">Invalid Username or Password</div>
+			<div th:if="${param.logout}" class="alert alert-success">Logout Successfully</div>
+						
+				<!--name-->
+				  <div class="form-group">
+    				<label for="username" class="form-label">Username</label>
+    				<input 
+    				name="username"
+    				type="text" 
+    				class="form-control" 
+    				id="username" 
+    				aria-describedby="takes the name input"
+    				placeholder="Enter your registered email here"
+    				th:value="${user.email}"
+    				required
+    				/>
+  
+    				
+  				</div>
+
+
+  				<!--password-->
+				  <div class="form-group">
+    				<label for="password_field" class="form-label">Password</label>
+    				<input 
+    				name="password"
+    				type="password" 
+    				class="form-control" 
+    				id="password_field" 
+    				aria-describedby="takes the password input"
+    				placeholder="Enter your password here"
+    				required/>
+  				</div>
+  				
+
+  				<div class="container text-center">
+  				<button type="submit" class="btn signin-signup-btn btn-primary">signin</button>
+  				</div>
+  				
+  				<div class="mt-4">
+				<div class="d-flex justify-content-center links">
+					Don't have an account? <a th:href="@{/signup}" class="ml-2">Sign Up</a>
+				</div>
+				<div class="d-flex justify-content-center links">
+					<a href="#">Forgot your password?</a>
+				</div>
+				</div>
+  				
+  				</form>
+			
+			</div>		
+		</div>	
+	</div>
+</div>
+
+</section>
+
+</body>
+</html>
