@@ -125,7 +125,7 @@ const refreshusers=(receiverid)=>{
 			return response.json();
 		})
 		.then((data)=>{
-			let text=`<div class="">`
+			let text=`<div class='messageusers'>`
 			data.forEach((sendersAndReceivers)=>{
 
 				
@@ -145,7 +145,7 @@ const refreshusers=(receiverid)=>{
 	
 				text+=`<div class='${sendersAndReceivers.user_id==receiverid?'activechat':'otherchat'}'>`
 				text+=`<img class='profile-image chat-avatar' src='/images/${sendersAndReceivers.image}' alt='avatar'/>`
-				text+=`<a href='/user/chat/${sendersAndReceivers.user_id}' class='chat' id='click-to-chat'>${sendersAndReceivers.user_name}</a>`
+				text+=`<a href='/user/chat/${sendersAndReceivers.user_id}' class='chat' id='click-to-chat'>${sendersAndReceivers.user_name}</a><span class='dot notificationfrom${sendersAndReceivers.user_id}' style='visibility: hidden;'></span>`
 				text+=`</div>`
 
 			});
@@ -156,11 +156,38 @@ const refreshusers=(receiverid)=>{
 			$(".messageusers").html(text);
 			$(".messageusers").show();
 		});
-		
-	
-
 	
 }
+
+
+
+
+function shownotification(){
+	let url=`http://localhost:8080/user/chat/notification`;
+	fetch(url)
+	.then((response)=>{
+		return response.json();
+	})
+	.then((data)=>{
+		
+		data.forEach((chatNotification)=>{
+			
+			if(chatNotification.seen_messages!=chatNotification.total_messages){
+				let text=`.notificationfrom`;
+				text+=`${chatNotification.sender_id}`;
+				$(text).css("visibility" , "visible");
+				$(".newmessage").css("visibility", "visible");
+
+			}
+			
+		});
+		
+	});
+}
+
+
+
+
 
 var usercount=0
 var prevusercount=0;
@@ -186,6 +213,7 @@ function getcount(){
 var count=0;
 var max=0;
 const refreshchat=(to_user, count)=>{
+	shownotification();
 	getcount();
 	var val=0;
 count++;

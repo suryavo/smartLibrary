@@ -37,7 +37,7 @@
 
 	
 		<a th:classappend="${pageid==1?'activemenu':''}" th:href="@{/user/dashboard}" class="item"><i class="fas fa-th-large"></i>Dashboard</a>
-		<a th:classappend="${pageid==3?'activemenu':''}" th:href="@{/user/chat/0}"  class="item"><i class="fas fa-envelope"></i>Messages</a>
+		<a th:classappend="${pageid==3?'activemenu':''}" th:href="@{/user/chat/0}"  class="item"><i class="fas fa-envelope"></i>Messages<span class="dot newmessage" style="visibility: hidden;"></span></a>
 		<a th:classappend="${pageid==4?'activemenu':''}" th:href="@{/user/mybooks}" class="item"><i class="fas fa-book-reader"></i>My Books</a>
 		<a th:classappend="${pageid==2?'activemenu':''}" th:href="@{/user/userlibrary/0}" class="item"><i class="fas fa-book"></i>Library</a>
 		<a th:classappend="${pageid==5?'activemenu':''}" th:href="@{/user/show-otp}" class="item"><i class="fas fa-key"></i>Show OTP</a>

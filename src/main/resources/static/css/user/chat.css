@@ -3,7 +3,7 @@
 	max-height: 750px;
 	display: flex;
 	margin: auto;
-	width: 1050px;
+	width: 1100px;
 	border-radius: 10px;
 	box-shadow: 1px 1px 10px lightgrey;
 }
@@ -39,7 +39,7 @@
 	padding: 10px 20px;
 }
 .otherchat{
-	padding: 2px 20px;
+	padding: 7px 20px;
 }
 .chat{
 	text-decoration: none;
@@ -123,5 +123,13 @@
 	color: white;
 	text-align: center;
 	
+}
+.dot {
+  height: 10px;
+  width: 10px;
+  margin-left: 20px;
+  background-color: rgb(255, 0, 0);
+  border-radius: 50%;
+  display: inline-block;
 }
 
