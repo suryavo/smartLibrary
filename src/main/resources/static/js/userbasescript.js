@@ -117,9 +117,8 @@ const reviewto=(book_id)=>{
 }
 
 
-const refreshusers=(receiverid)=>{
-
-		let url=`http://localhost:8080/user/chat/refresh/users`;
+function refreshusers(receiverid){
+	let url=`http://localhost:8080/user/chat/refresh/users`;
 		fetch(url)
 		.then((response)=>{
 			return response.json();
@@ -128,21 +127,6 @@ const refreshusers=(receiverid)=>{
 			let text=`<div class='messageusers'>`
 			data.forEach((sendersAndReceivers)=>{
 
-				
-				
-				/*<div class="senderAndReceiver" th:classappend="${sr.user_id==receiver.user_id?'activechat':'otherchat'}">
-	<img class="profile-image chat-avatar" th:src="@{'/images/'+${sr.image}}" alt="avatar"/>
-	<a  th:href="@{'/user/chat/'+${sr.user_id}}" class="chat" id="click-to-chat" ><span th:text="${sr.user_name}"></span></a>
-	</div>
-	
-		<div th:each="sr: ${sendersAndReceiversList}" >
-	<div class="senderAndReceiver" th:classappend="${sr.user_id==receiver.user_id?'activechat':'otherchat'}">
-	<img class="profile-image chat-avatar" th:src="@{'/images/'+${sr.image}}" alt="avatar"/>
-	<a  th:href="@{'/user/chat/'+${sr.user_id}}" class="chat" id="click-to-chat" ><span th:text="${sr.user_name}"></span></a>
-	</div>
-	</div>*/
-	
-	
 				text+=`<div class='${sendersAndReceivers.user_id==receiverid?'activechat':'otherchat'}'>`
 				text+=`<img class='profile-image chat-avatar' src='/images/${sendersAndReceivers.image}' alt='avatar'/>`
 				text+=`<a href='/user/chat/${sendersAndReceivers.user_id}' class='chat' id='click-to-chat'>${sendersAndReceivers.user_name}</a><span class='dot notificationfrom${sendersAndReceivers.user_id}' style='visibility: hidden;'></span>`
@@ -151,18 +135,28 @@ const refreshusers=(receiverid)=>{
 			});
 			
 			text+=`</div>`
-			console.log(text);
 
 			$(".messageusers").html(text);
 			$(".messageusers").show();
 		});
-	
+		
+		
+  
 }
 
 
+function func(receiverid, c){
+c++;
+if(c==2){
+	getcount();
+}
+	  setTimeout(function() {
+    func(receiverid, c);
+  }, 300);
+}
 
 
-function shownotification(){
+/*function shownotification(){
 	let url=`http://localhost:8080/user/chat/notification`;
 	fetch(url)
 	.then((response)=>{
@@ -183,9 +177,11 @@ function shownotification(){
 		});
 		
 	});
+	
+
 }
 
-
+*/
 
 
 
@@ -200,71 +196,19 @@ function getcount(){
 		.then((data)=>{
 			
 			usercount=data;
+			console.log(usercount);
+			console.log(prevusercount);
 			if(usercount!=prevusercount){
 				prevusercount=usercount;
 				refreshusers(receiverid);
 			}
 
 		});
-	
-}
-
-
-var count=0;
-var max=0;
-const refreshchat=(to_user, count)=>{
-	shownotification();
-	getcount();
-	var val=0;
-count++;
-if(count<3){
-	scroll();
-}
-		let url=`http://localhost:8080/user/chat/refresh/${to_user}`;
-		fetch(url)
-		.then((response)=>{
-			return response.json();
-		})
-		.then((data)=>{
-			let text=`<div class="">`
-			data.forEach((chatMessage)=>{
-				val++;
-				if(chatMessage.sender_id==to_user){
-					text+=`<a class='chat-messages-display-single-receiver'> ${chatMessage.message}</a>`
-				}
-				else{
-					
-					text+=`<a class='chat-messages-display-single-sender'> ${chatMessage.message}</a>`
-				}
-
-			});
-			
-			text+=`</div>`
-			
-			
-			
-			$(".chats").html(text);
-			$(".chats").show();
-			
-		if(val!=max){
-				scroll();
-				max=val;
-			}
-		});
-		
-		
-		
-		$("#wrapperchat").load();
-  setTimeout(function() {
-    refreshchat(to_user, count);
-  }, 400);
 		
 
 	
-};
-$(document).ready(function () {
-  refreshchat(to_user, count);
-});
+}
+
 
 
 
@@ -272,7 +216,9 @@ $(document).ready(function () {
 var submitMessage=document.getElementById("submitMessage");
 var clicktochat=document.getElementById("click-to-chat");
 var receiver=document.getElementById("receiver");
-var receiverid=receiver.getAttribute("value");
+var receiverid=0;
+if(receiver!=null) receiverid=receiver.getAttribute("value");
+
 
 
 function save(receiverid, message){
@@ -285,26 +231,17 @@ function save(receiverid, message){
 
 
 		});
-	
+
 }
-
-
-submitMessage.addEventListener('click', function(){
-	let message=$("#chatmessage").val();
-	console.log(receiverid);
-	console.log(message);
-	save(receiverid, message);
-	refreshchat(receiverid, 0);
-	document.getElementById('chatmessage').value = "";
-	
-	
-});
 
 
 window.addEventListener('load', function() {
     refreshchat(receiverid, 0);
     refreshusers(receiverid);
 });
+
+
+
 
 function enablechatbutton(){
 	var input=document.getElementById("chatmessage");
@@ -318,7 +255,7 @@ function enablechatbutton(){
 
 function scroll(){
 	var chatHistory = document.getElementById("chatbody");
-		chatHistory.scrollTop = chatHistory.scrollHeight;
+	if(chatHistory!=null) chatHistory.scrollTop = chatHistory.scrollHeight;
 }
 
 
@@ -326,9 +263,63 @@ function scroll(){
 
 
 
-/*---------------------------------NOTIFICATION-------------------------------------------*/
+/*---------------------------------AJAX-------------------------------------------*/
+var count=0;
+var max=0;
+function refreshchat(to_user, count){
+getcount();
+var val=0;
+count++;
+if(count<3){
+	scroll();
+}
 
 
+	$.ajax({
+    url: "http://localhost:8080/user/chat/refresh/"+to_user,
+    type: 'GET',
+    cache: false,
+    success: function(result) {
+        //  alert(jQuery.dataType);
+        if (result) {
+            //  var dd = JSON.parse(result);
+            let text=`<div class="">`
+            for(r in result){
+				val++;
+				if(result[r].sender_id==receiverid){
+					text+=`<a class='chat-messages-display-single-receiver'> ${result[r].message}</a>`
+				}
+				else{
+					
+					text+=`<a class='chat-messages-display-single-sender'> ${result[r].message}</a>`
+				}
+	
+			}
+			text+=`</div>`
+			
+			$(".chats").html(text);
+			$(".chats").show();
+			
+			
+			if(val!=max){
+				scroll();
+				max=val;
+			}
+
+        }
+
+    },
+    error: function() {
+		alert("no chat available");
+    }
+    
+    
+
+    
+    
+});
+    		
+}
 
 
 
