@@ -127,9 +127,11 @@ function refreshusers(receiverid){
 			let text=`<div class='messageusers'>`
 			data.forEach((sendersAndReceivers)=>{
 
-				text+=`<div class='${sendersAndReceivers.user_id==receiverid?'activechat':'otherchat'}'>`
+				
+				text+=`<div id='activeornot${sendersAndReceivers.user_id}' class='${sendersAndReceivers.user_id==receiverid?'activechat':'otherchat'}'>`
 				text+=`<img class='profile-image chat-avatar' src='/images/${sendersAndReceivers.image}' alt='avatar'/>`
-				text+=`<a href='/user/chat/${sendersAndReceivers.user_id}' class='chat' id='click-to-chat'>${sendersAndReceivers.user_name}</a><span class='dot notificationfrom${sendersAndReceivers.user_id}' style='visibility: hidden;'></span>`
+				text+=`<a style='cursor: pointer;' onclick='openchat(${sendersAndReceivers.user_id}, "${sendersAndReceivers.user_name}", "${sendersAndReceivers.image}")' class='chat' id='click-to-chat'>${sendersAndReceivers.user_name}</a><span class='dot notificationfrom${sendersAndReceivers.user_id}' style='visibility: hidden;'></span>`
+				/*text+=`<a href='/user/chat/${sendersAndReceivers.user_id}' class='chat' id='click-to-chat'>${sendersAndReceivers.user_name}</a><span class='dot notificationfrom${sendersAndReceivers.user_id}' style='visibility: hidden;'></span>`*/
 				text+=`</div>`
 
 			});
@@ -196,8 +198,6 @@ function getcount(){
 		.then((data)=>{
 			
 			usercount=data;
-			console.log(usercount);
-			console.log(prevusercount);
 			if(usercount!=prevusercount){
 				prevusercount=usercount;
 				refreshusers(receiverid);

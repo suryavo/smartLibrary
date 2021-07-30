@@ -21,9 +21,9 @@
 <div class="messagecard" style="width: 50%;">
 
 	
-	<div  class=" messagecard-header">
-	<img class="profile-image chat-avatar" th:src="@{'/images/'+${receiver.image}}" alt="avatar"/>
-	<h4><span th:text="${receiver.user_name}" style="color: white;"></span></h4>
+	<div id="messagecard-header" class=" messagecard-header">
+		<img class="profile-image chat-avatar" th:src="@{'/images/'+${receiver.image}}" alt="avatar"/>
+		<h4><span class="chatuserheader" th:text="${receiver.user_name}" style="color: white;"></span></h4>
 	</div>
 	
 <div class="messagecardbody">
@@ -37,7 +37,6 @@
 	<input onkeyup="enablechatbutton()" type="text" name="chatmessage" id="chatmessage" class="form-control chatmessage" placeholder="write your message....." required/>
 	<button class="btn btn-primary send-message-btn" id="submitMessage" disabled>send</button>
 	</div>
-	
 	
 	
 

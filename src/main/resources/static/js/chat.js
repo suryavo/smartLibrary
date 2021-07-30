@@ -11,6 +11,32 @@ var receiver=document.getElementById("receiver");
 var receiverid=0;
 if(receiver!=null) receiverid=receiver.getAttribute("value");
 
+function openchat(id, user_name, image){
+	var prev=receiverid;
+	receiverid=id;
+	if(prev!=id){
+		var c="activeornot";
+		c+=id;
+		var p="activeornot";
+		p+=prev;
+		document.getElementById(c).classList.add('activechat');
+		
+		let t=`<img class='profile-image chat-avatar' src='/images/${image}' alt='avatar'/>`
+		t+=`<h4><span class='chatuserheader' style="color: white;">${user_name}</span></h4>`
+		document.getElementById("messagecard-header").innerHTML=t;
+
+		document.getElementById(p).classList.remove('activechat');
+		document.getElementById(p).classList.add('otherchat');
+				let text=`.notificationfrom`;
+				text+=`${id}`;
+				$(text).css("visibility" , "hidden");
+				$(".newmessage").css("visibility", "hidden");
+		refreshchat(receiverid, 0);
+	}
+	
+}
+
+
 window.addEventListener('load', function() {
     connectToChat(userid);
     refreshusers(receiverid);
@@ -25,8 +51,10 @@ function connectToChat(user_id) {
         console.log("connected to: " + frame);
         stompClient.subscribe("/topic/messages/" + user_id, function (response) {
             let data = JSON.parse(response.body);
+            console.log(data);
             func(receiverid, 0);
             sender=data.sender_id;
+            
             if (receiverid == data.sender_id) {
                 render(data.message, data.sender_id);
             } else {
@@ -54,6 +82,7 @@ function sendMsg(to, text) {
 
 
 function sendMessage(message) {
+	console.log(receiverid);
     sendMsg(receiverid, message);
     
     let text=`<div class="">`
