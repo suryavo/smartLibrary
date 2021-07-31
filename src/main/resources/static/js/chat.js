@@ -12,6 +12,12 @@ var receiverid=0;
 if(receiver!=null) receiverid=receiver.getAttribute("value");
 
 function openchat(id, user_name, image){
+	if(receiverid==0){
+		let url=`http://localhost:8080/user/chat/`
+		url+=`${id}`
+		window.location.replace(url);
+		
+	}
 	var prev=receiverid;
 	receiverid=id;
 	if(prev!=id){
@@ -91,7 +97,6 @@ function sendMessage(message) {
 	console.log(text);
 	document.getElementById("chatbody").innerHTML+=text;
 	var v=document.getElementById("chatbody").innerHTML;
-
     console.log(message);
     setTimeout(function () {
         scroll();

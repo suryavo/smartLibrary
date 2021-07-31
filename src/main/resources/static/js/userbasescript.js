@@ -148,10 +148,11 @@ function refreshusers(receiverid){
 
 
 function func(receiverid, c){
-c++;
+
 if(c==2){
 	getcount();
 }
+c++;
 	  setTimeout(function() {
     func(receiverid, c);
   }, 300);

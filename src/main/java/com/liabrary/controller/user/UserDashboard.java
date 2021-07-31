@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Formatter;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -79,6 +80,60 @@ public class UserDashboard {
 		User user=userRepository.findByUsername(userName);
 		model.addAttribute("title", user.getUser_name()+"-Smart Library");
 		model.addAttribute("user", user);
+		
+		
+		List<Book> booksByDomain=this.bookRepository.findBookByDomain(user.getDepartment());
+		PriorityQueue<BookSuggestion> bs=new PriorityQueue<BookSuggestion>(5, (b,a) -> a.getRating() - b.getRating());
+		for(Book b : booksByDomain) {
+			List<RatingReview> ratingReviewList=this.ratingReviewRepository.findRatingReviewByBook(b);
+			int count=0;
+			int totalrating=0;
+			for(RatingReview rr:ratingReviewList) {
+				count++;
+				totalrating+=rr.getRating();
+				
+				int val=rr.getRating();
+				val=val*100/5;
+				val=Math.round(val/10);
+				val=val*10;
+				
+				rr.setRating(val);
+
+			}
+			int avgrating=0;
+			if(count>0) avgrating=totalrating/count;
+			
+			
+			
+			double averageRating=(double)avgrating;
+			Formatter formatter = new Formatter();
+	        formatter.format("%.1f", averageRating);
+	        String average=formatter.toString();
+	        
+			int percentageRating=Math.round(((int)averageRating*100/5)/10)*10;
+			
+			
+			
+			bs.add(new BookSuggestion(b, avgrating, percentageRating, average));
+		}
+		
+		int min=5;
+		min=Math.min(min, bs.size());
+		
+		List<BookSuggestion> topfive=new ArrayList<>();
+		for(int i=0;i<min;i++) {
+			topfive.add(bs.poll());
+		}
+		
+
+		if(topfive.size()==0) {
+			model.addAttribute("topfive", "0");
+		}
+		else {
+			model.addAttribute("topfive", topfive);
+		}
+		
+		System.out.println(topfive);
 		
 		model.addAttribute("pageid", 1);
 		
@@ -522,4 +577,66 @@ public class UserDashboard {
 	}
 	
 
+}
+
+
+class BookSuggestion{
+	Book book;
+	int rating;
+	int percentagerating;
+	String average;
+	
+	public BookSuggestion() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	
+
+	public BookSuggestion(Book book, int rating, int percentagerating, String average) {
+		super();
+		this.book = book;
+		this.rating = rating;
+		this.percentagerating = percentagerating;
+		this.average = average;
+	}
+
+
+
+	public Book getBook() {
+		return book;
+	}
+	public void setBook(Book book) {
+		this.book = book;
+	}
+	public int getRating() {
+		return rating;
+	}
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public int getPercentagerating() {
+		return percentagerating;
+	}
+
+	public void setPercentagerating(int percentagerating) {
+		this.percentagerating = percentagerating;
+	}
+
+
+
+	public String getAverage() {
+		return average;
+	}
+
+
+
+	public void setAverage(String average) {
+		this.average = average;
+	}
+
+
+	
+	
 }

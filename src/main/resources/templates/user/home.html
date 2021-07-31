@@ -7,14 +7,41 @@
 <body>
 
 <section>
-<div class="text-center">
-<h1>Name: <span th:text="${user.user_name}"></span></h1>
-<h2>Roll_no: <span th:text="${user.roll_no}"></span></h2>
-<h2>Mobile: <span th:text="${user.mob_no}"></span></h2>
-<h2>Active: <span th:text="${user.profile_activity}"></span></h2>
-<h2>Department: <span th:text="${user.department}"></span></h2>
-<h2>Year: <span th:text="${user.year}"></span></h2>
-<h2>Expiry: <span th:text="${user.expiry_date}"></span></h2>
+<h3>Top Books From Your domain</h3>
+
+<div th:if="${topfive!=0}" class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
+
+
+
+<div  th:each="book: ${topfive}">
+	<div class="mybookscard">
+		<div class="mybookscardbody">
+				<div class="col md-4">
+					<img class="card-img-top" th:src="@{'/images/'+${book.book.image}}"/>
+					<div class="mybooks-text-body">
+					<h3 th:text="${book.book.book_name}">text</h3>
+					
+					<div id="${book.book_id}" class="${book.book_id} ratingdiv" >
+						<div class="stars-outer">
+				            <div class="stars-inner" th:style=" 'width: ' + ${book.percentagerating} + 'px; '"></div>
+				        </div>
+				        <span class="number-rating" th:text="${book.average}"></span>
+					</div>
+		
+		
+					<h6>Publisher:<span class="mybooks-text" th:text="${book.book.publisher}"></span></h6>
+					<h6>Author:<span class="mybooks-text" th:text="${book.book.author}"></span></h6>
+					<h6>Domain:<span class="mybooks-text" th:text="${book.book.domain}"></span></h6>
+					
+					<form th:action="@{'/user/show-book/'+${book.book.book_id}}" >
+			      <button type="submit" class="release-button btn btn-primary">view book</button>
+			      </form>
+					
+					
+				</div>
+		</div>
+	</div>
+</div>
 </div>
 
 </section>

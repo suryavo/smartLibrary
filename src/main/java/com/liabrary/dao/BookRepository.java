@@ -22,6 +22,10 @@ public interface BookRepository extends JpaRepository<Book, Integer>{
 	
 	@Query("select b from Book b where b.book_name like %:book_name%")
 	public Page<Book> findBookByNamePage(@Param("book_name") String book_name, Pageable pagedata);
+	
+	
+	@Query("select b from Book b where b.domain= :domain")
+	public List<Book> findBookByDomain(@Param("domain") String domain);
 
 	
 }

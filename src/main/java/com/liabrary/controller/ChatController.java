@@ -40,6 +40,9 @@ public class ChatController {
 	@Autowired
 	private ChatNotificationRepository chatNotificationRepository;
 	
+	
+
+	
 	@GetMapping("/{to_user}")
 	public String dashboard(@PathVariable("to_user") int to_user, Principal principal, Model model) {
 		
@@ -70,7 +73,6 @@ public class ChatController {
 			cn.setSeen_messages(total_messages);
 			ChatNotification cnres=this.chatNotificationRepository.save(cn);
 		}
-		
 		
 		
 		model.addAttribute("sendersAndReceiversList", sendersAndReceiversList);
