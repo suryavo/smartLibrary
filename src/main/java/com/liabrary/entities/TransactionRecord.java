@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -28,8 +30,11 @@ public class TransactionRecord {
 	private User from_user;
 	@ManyToOne
 	private User to_user;
+	@Temporal(TemporalType.DATE)
 	private Date issue_date;
+	@Temporal(TemporalType.DATE)
 	private Date expected_return_date;
+	@Temporal(TemporalType.DATE)
 	private Date return_date;
 	private int fine;
 	private boolean returned;

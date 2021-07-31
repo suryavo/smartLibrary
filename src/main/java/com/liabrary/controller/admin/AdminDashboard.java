@@ -12,7 +12,11 @@ import java.util.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -22,6 +26,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -395,4 +400,146 @@ public class AdminDashboard {
 		
 	}
 	
+	
+	// ------------------------View Transactions-------------------------------------------------------------
+	//----------------------------------------------------------------------------------------------------
+	@GetMapping("/viewtransactions")
+	public String viewTransactions(Model model, Principal principal, HttpSession session) {
+		
+		String userName=principal.getName();
+		User user=userRepository.findByUsername(userName);
+		model.addAttribute("title", user.getUser_name()+"-Admin Library");
+		model.addAttribute("user", user);
+		
+		try {
+			
+			List<TransactionRecord> tr=this.transactionRecordRepository.findAll();
+			model.addAttribute("transactionRecords", tr);
+			
+			
+			
+			return "/admin/viewtransactions";
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			session.setAttribute("message", new Message("Sorry! Something went wrong !! ", "alert-danger"));
+			return "/admin/viewtransactions";
+		}
+		
+		
+	}
+	@PostMapping("/viewtransactions/search")
+	public String viewTransactionsSearch(@RequestParam("email") String email, 
+			@RequestParam("bookid") String bookid, 
+			@RequestParam("borrowDate") String borrowDate,
+			@RequestParam("expectedReturnDate") String expectedReturnDate,
+			@RequestParam("returnDate") String returnDate,
+			Model model, Principal principal, HttpSession session) {
+		
+		String userName=principal.getName();
+		User user=userRepository.findByUsername(userName);
+		model.addAttribute("title", user.getUser_name()+"-Admin Library");
+		model.addAttribute("user", user);
+		
+		User u=this.userRepository.findByUsername(email);
+		
+		Date bd=null;
+		Date erd=null;
+		Date rd=null;
+		try {
+			bd=new SimpleDateFormat("yyyy-MM-dd").parse(borrowDate);
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		try {
+			erd=new SimpleDateFormat("yyyy-MM-dd").parse(expectedReturnDate);
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		try {
+			rd=new SimpleDateFormat("yyyy-MM-dd").parse(returnDate);
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	    int book_id=0;
+		if(borrowDate.equals("")) borrowDate="null";
+		if(expectedReturnDate.equals("")) expectedReturnDate="null";
+		if(returnDate.equals("")) returnDate="null";
+		if(!bookid.equals("")) book_id=Integer.valueOf(bookid);
+		
+		List<TransactionRecord> tr=this.transactionRecordRepository.findbydate(u, borrowDate , expectedReturnDate, returnDate, book_id);
+		System.out.println(tr);
+		model.addAttribute("transactionRecords", tr);
+		System.out.println(email+" "+bookid+" "+borrowDate+" "+expectedReturnDate+" "+returnDate);
+		
+		return "/admin/viewtransactions";
+		
+	}
+	
+	
+	
+	@PostMapping("/viewtransactions/update/{record_id}")
+	public String updateTransactions(@PathVariable("record_id") int record_id, Model model, Principal principal, HttpSession session) {
+		
+		String userName=principal.getName();
+		User user=userRepository.findByUsername(userName);
+		model.addAttribute("title", user.getUser_name()+"-Admin Library");
+		model.addAttribute("user", user);
+		
+		TransactionRecord tr=this.transactionRecordRepository.findByTransactionId(record_id);
+		model.addAttribute("transactionRecord", tr);
+		
+		return "/admin/editTransactionRecords";
+		
+	}
+	
+	@PostMapping("/viewtransactions/update/{record_id}/do-update")
+	public String doUpdateTransactions(@PathVariable("record_id") int record_id, @RequestParam("fine") String fine, @RequestParam("to_user") String to_user, Model model, Principal principal, HttpSession session) {
+		
+		String userName=principal.getName();
+		User user=userRepository.findByUsername(userName);
+		model.addAttribute("title", user.getUser_name()+"-Admin Library");
+		model.addAttribute("user", user);
+		
+		TransactionRecord tr=this.transactionRecordRepository.findByTransactionId(record_id);
+		BookStock bs=this.bookStockRepository.getById(tr.getUnique_book_id());
+		
+		if(!to_user.equals("")) {
+			User to=this.userRepository.getById(Integer.valueOf(to_user));
+			
+			tr.setTo_user(to);
+			
+			int f=0;
+			if(!fine.equals("")) f=Integer.valueOf(fine);
+			tr.setFine(f);
+			
+			Date today = new Date();
+			Calendar cal=Calendar.getInstance();
+			today=cal.getTime();
+			tr.setReturn_date(today);
+			tr.setReturned(true);
+			
+			bs.setUser(to);
+			BookStock bsres=this.bookStockRepository.save(bs);
+			
+		}
+		else {
+			
+			int f=0;
+			if(!fine.equals("")) f=Integer.valueOf(fine);
+			tr.setFine(f);
+			
+		}
+		
+		TransactionRecord res=this.transactionRecordRepository.save(tr);
+		model.addAttribute("transactionRecord", res);
+		
+		return "/admin/editTransactionRecords";
+		
+	}
+	
 }
+

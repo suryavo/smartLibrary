@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org" th:replace="/admin/adminbase::Layout(~{::section})">
+<head>
+	<meta charset="UTF-8"/>
+	<title>This is my book entry page</title>
+</head>
+<body>
+
+<section>
+
+<div class="entrybook-card">
+
+			
+<h1 class="heading text-left">Update Book Details</h1>
+
+
+<form th:object="${transactionRecord}" novalidate action="" th:action="@{'/admin/viewtransactions/update/'+${transactionRecord.record_id}+'/do-update'}" method="post" >
+
+
+<div class="row">
+  <div class="mb-3 col">
+    <label for="fine" class="form-group">fine</label>
+    <input th:value="${transactionRecord.fine}" name="fine" type="text" class="form-control" id="fine" aria-describedby="fine" placeholder="add fine" required>
+  </div>
+  <div class="mb-3 col">
+    <label for="to_user" class="form-group">Return to</label>
+    <input  name="to_user" type="text" class="form-control" id="to_user" aria-describedby="to_user" placeholder="Enter the to user" required>
+  </div>
+
+
+<div class="form-group">
+<button type="submit" class="btn btn-primary" id="submit" >Update</button>
+<button type="reset" class="btn btn-warning" id="reset" >Reset</button>
+</div>
+
+
+
+</form>
+</div>
+
+</section>
+
+</body>
+</html>

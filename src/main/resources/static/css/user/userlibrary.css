@@ -4,9 +4,7 @@
 .user-library{
 	padding: 30px 20px 15px 20px;
 }
-.search-container{
-	position: relative;
-}
+
 .search-result{
 	position: absolute;
 	background: white;
@@ -19,4 +17,13 @@
 }
 .book-list{
 	text-decoration: none;
+}
+.librarytop{
+	display: flex;
+}
+.search-container{
+	flex: 3;
+}
+.search-button1{
+	flex: 1;
 }

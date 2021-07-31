@@ -12,6 +12,7 @@
 	<link rel="stylesheet" th:href="@{/css/admin/entrybook.css}"/>
 	<link rel="stylesheet" th:href="@{/css/admin/adminlibrary.css}"/>
 	<link rel="stylesheet" th:href="@{/css/admin/showbook.css}"/>
+	<link rel="stylesheet" th:href="@{/css/admin/viewtransaction.css}"/>
 
     <title th:text="${title}">Hello, world!</title>
   </head>
@@ -34,11 +35,10 @@
 
 	
 		<a th:href="@{/user/dashboard}" class="item"><i class="fas fa-th-large"></i>Dashboard</a>
-		<a href="#" class="item"><i class="fas fa-envelope"></i>Borrow Requests</a>
 		<a th:href="@{/admin/entrybook}" class="item"><i class="fas fa-plus-square"></i>Entry New Book</a>
 		<a th:href="@{/admin/adminlibrary/0}" class="item"><i class="fas fa-book-open"></i>Admin Library</a>
 		<a th:href="@{/admin/assign-book}" class="item"><i class="fas fa-book-open"></i>Assign Book</a>
-		<a href="#" class="item"><i class="fas fa-bell"></i>Notifications</a>
+		<a th:href="@{/admin/viewtransactions}" class="item"><i class="fas fa-bell"></i>View Transaction</a>
 		<a th:href="@{/logout}" class="item">Logout</a>
 		<div class="divider"></div>
 	

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org" th:replace="/admin/adminbase::Layout(~{::section})">
+<head>
+	<meta charset="UTF-8"/>
+	<title>This is my book entry page</title>
+</head>
+<body>
+
+<section>
+
+
+<div class="headerofviewtransactions">
+<h1 class="user-library heading text-left">Transaction Records</h1>
+<form method="post" th:action="@{/admin/viewtransactions/search}">
+<div class="searchrecords">
+<input name="email" id="searchbyuser" class="searchrecordinputs form-control searchbyuser" placeholder="user email"/>
+<input name="bookid" id="searchbyuniquebook" class="searchrecordinputs form-control searchbyuniquebook" placeholder="unique book id"/>
+<input name="borrowDate" id="searchbyborrowdate" class="searchrecordinputs form-control searchbyborrowdate" placeholder="borrow date"/>
+<input name="expectedReturnDate" id="searchbyexpectedreturndate" class="searchrecordinputs form-control searchbyexpectedreturndate" placeholder="expected return date"/>
+<input name="returnDate" id="searchbyreturndate" class="searchrecordinputs form-control searchbyreturndate" placeholder="return date"/>
+<input name="returnstatus" id="searchbyreturnstatus" class="searchrecordinputs form-control searchbyreturnstatus" placeholder="return status"/>
+<button type="submit" class="search-record-button btn btn-primary">Search Records</button>
+</div>
+</form>
+
+</div>
+
+
+
+
+
+<div class="card" style="margin-top: 20px;">
+	<div class="card-body" style="overflow-y: scroll; height:700px;">
+
+
+
+
+
+	<table class="table">
+			  <thead>
+			    <tr>
+			      <th scope="col">Sl.No</th>
+			      <th scope="col">Book Id</th>
+			      <th scope="col">Current User</th>
+			      <th scope="col">Borrowed From</th>
+			      <th scope="col">Returned To</th>
+			      <th scope="col">Issue Date</th>
+			      <th scope="col">Expected Return date</th>
+			      <th scope="col">Actual Return date</th>
+			      <th scope="col">Fine</th>
+			      <th scope="col">Returned</th>
+			      <th scope="col">Action</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr th:each="tr :${transactionRecords}">
+			      <th scope="row" th:text="${tr.record_id}">1</th>
+			      <td th:text="${tr.unique_book_id}">Otto</td>
+			      <td th:text="${tr.current_user.email}">Otto</td>
+			      <td th:text="${tr.from_user!=null?(tr.from_user.role=='ROLE_ADMIN'?'ADMIN':tr.from_user.email):'---'}">Otto</td>
+			      <td th:text="${tr.to_user!=null?(tr.to_user.role=='ROLE_ADMIN'?'ADMIN':tr.to_user.email):'---'}">Otto</td>
+			      <td th:text="${tr.issue_date}">Otto</td>
+			      <td th:text="${tr.expected_return_date}">Otto</td>
+			      <td th:text="${tr.return_date!=null?tr.return_date:'---'}">Otto</td>
+			      <td th:text="${tr.fine!=null?tr.fine:'---'}">Otto</td>
+			      <td th:text="${tr.returned}">Otto</td>
+			      <td>
+			      
+			      <form method="post" th:action="@{'/admin/viewtransactions/update/'+${tr.record_id}}">
+			      <button type="submit" class="btn btn-primary">Edit Transaction</button>
+			      </form>
+			      
+			      </td>
+			    </tr>
+			  </tbody>
+			</table>
+			
+	
+			
+			
+	</div>
+</div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+.headerofviewtransactions{
+	margin-top: -30px;
+}
+.searchrecordinputs{
+	margin-right: 3px;
+}
+.searchrecords{
+	display: flex;
+	max-height: 45px;
+}
+.searchrecordinputs{
+	flex: 1;
+}

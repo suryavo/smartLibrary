@@ -11,19 +11,20 @@
 <div class="card">
 	<div class="card-body">
 
-<div class="row g-3 align-items-center">
+<div class="row g-3 align-items-center librarytop">
 <h1 class="user-library col heading text-left">Library</h1>
 
 
 <!----------------------Search------------------------>
-  <div class="search-container col">
+
+  <div class="search-container">
     <input onkeyup="searchonkeyup()" th:value="${query}"  id="search_book"  name="search_book" type="text" class="form-control"  aria-describedby="search_book" placeholder="Enter the book name here" >
     <div class="search-result">
 
     </div>
   </div>
 
-  <div class="col">
+  <div class="search-button1">
   	<button onclick="search()" class="search-button btn btn-primary" >search book</button>
   </div>
   
