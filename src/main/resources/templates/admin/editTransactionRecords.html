@@ -8,12 +8,60 @@
 
 <section>
 
-<div class="entrybook-card">
+<div class="entrybook-card" >
+		
+<h1 class="heading text-left">Update Records Manually</h1>
 
-			
-<h1 class="heading text-left">Update Book Details</h1>
 
+<div th:object="${transactionRecord}" class="updatetransactionrecord row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
 
+<div class="individualupdatetransactionrecord col">
+<h4 style="color: rgb(13, 110, 253);">Current User</h4>
+<h6>Name: <span th:text="${transactionRecord.current_user.user_name}"></span></h6>
+<h6>Roll No: <span th:text="${transactionRecord.current_user.roll_no}"></span></h6>
+<h6>email: <span th:text="${transactionRecord.current_user.email}"></span></h6>
+</div>
+
+<div class="individualupdatetransactionrecord col" th:if="${transactionRecord.from_user.role=='ROLE_USER'}">
+<h4 style="color: rgb(13, 110, 253);">Borrowed From</h4>
+<h6>Name: <span th:text="${transactionRecord.current_user.user_name}"></span></h6>
+<h6>Roll No: <span th:text="${transactionRecord.current_user.roll_no}"></span></h6>
+<h6>email: <span th:text="${transactionRecord.current_user.email}"></span></h6>
+</div>
+
+<div class="individualupdatetransactionrecord col" th:if="${transactionRecord.from_user.role=='ROLE_ADMIN'}">
+<h4 style="color: rgb(13, 110, 253);">Borrowed From</h4>
+<h6>LIBRARY</h6>
+</div>
+
+<div class="individualupdatetransactionrecord col">
+<h4 style="color: rgb(13, 110, 253);">Borrowing Date</h4>
+<h6><span th:text="${transactionRecord.issue_date}"></span></h6>
+</div>
+
+<div class="individualupdatetransactionrecord col">
+<h4 style="color: rgb(13, 110, 253);">Expected Return Date</h4>
+<h6><span th:text="${transactionRecord.expected_return_date}"></span></h6>
+</div>
+
+<div class="individualupdatetransactionrecord col">
+<h4 style="color: rgb(13, 110, 253);">Return Status</h4>
+<h6>Returned: <span th:text="${transactionRecord.returned}"></span></h6>
+</div>
+
+<div class="individualupdatetransactionrecord col" th:if="${transactionRecord.return_date!=null}">
+<h4 style="color: rgb(13, 110, 253);">Return Date</h4>
+<h6>Returned: <span th:text="${transactionRecord.return_date}"></span></h6>
+</div>
+
+<div class="individualupdatetransactionrecord col">
+<h4 style="color: rgb(13, 110, 253);">Fine</h4>
+<h6><span th:text="${transactionRecord.fine}"></span></h6>
+</div>
+
+</div>
+
+<div style="margin-top: 30px;">
 <form th:object="${transactionRecord}" novalidate action="" th:action="@{'/admin/viewtransactions/update/'+${transactionRecord.record_id}+'/do-update'}" method="post" >
 
 
@@ -33,9 +81,11 @@
 <button type="reset" class="btn btn-warning" id="reset" >Reset</button>
 </div>
 
-
-
 </form>
+</div>
+
+
+
 </div>
 
 </section>

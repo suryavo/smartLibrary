@@ -9,7 +9,7 @@
 	position: absolute;
 	background: white;
 	display: none;
-	width: 97%;
+	width: 57%;
 	padding: 10px;
 	border: 0px solid grey;
 	box-shadow: 1px 1px 10px rgb(147, 147, 147);
@@ -26,4 +26,7 @@
 }
 .search-button1{
 	flex: 1;
+}
+.librarycard{
+	width: 100%;
 }

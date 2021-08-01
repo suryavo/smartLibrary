@@ -21,6 +21,25 @@ public interface TransactionRecordRepository extends JpaRepository<TransactionRe
 	@Query("select tr from TransactionRecord tr where tr.current_user= :user AND tr.returned= :status")
 	public List<TransactionRecord> findTransactionRecordByCurrentUserAndStatus(@Param("user") User user, @Param("status") boolean status);
 	
-	@Query("select tr from TransactionRecord tr where tr.current_user= :user OR tr.from_user= :user  OR tr.to_user= :user  AND ISNULL(DATE_FORMAT(tr.issue_date , '%Y-%m-%d'),'') like %:borrowDate% AND ISNULL(DATE_FORMAT(tr.expected_return_date , '%Y-%m-%d'),'') like %:expectedReturnDate% AND ISNULL(DATE_FORMAT(tr.return_date , '%Y-%m-%d'),'') like %:returnDate% AND tr.unique_book_id= :book_id")
-	public List<TransactionRecord> findbydate(@Param("user") User user, @Param("borrowDate") String borrowDate, @Param("expectedReturnDate") String expectedReturnDate, @Param("returnDate") String returnDate, @Param("book_id") int book_id);
+	
+	
+	
+	
+	@Query("select tr from TransactionRecord tr where tr.current_user= :user OR tr.from_user= :user OR tr.to_user= :user")
+	public List<TransactionRecord> findRecordByUser(@Param("user") User user);
+	
+	@Query("select tr from TransactionRecord tr where tr.unique_book_id= :unique_book_id")
+	public List<TransactionRecord> findRecordByBookId(@Param("unique_book_id") int unique_book_id);
+	
+	@Query("select tr from TransactionRecord tr where tr.issue_date= :borrowDate")
+	public List<TransactionRecord> findRecordByBorrowDate(@Param("borrowDate") Date borrowDate);
+
+	@Query("select tr from TransactionRecord tr where tr.expected_return_date= :expectedReturnDate")
+	public List<TransactionRecord> findRecordByExpectedReturnDate(@Param("expectedReturnDate") Date expectedReturnDate);
+	
+	@Query("select tr from TransactionRecord tr where tr.return_date= :returnDate")
+	public List<TransactionRecord> findRecordByReturnDate(@Param("returnDate") Date returnDate);
+	
+	@Query("select tr from TransactionRecord tr where tr.returned= :status")
+	public List<TransactionRecord> findRecordByStatus(@Param("status") boolean status);
 }

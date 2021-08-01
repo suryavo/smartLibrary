@@ -18,7 +18,11 @@
 <input name="borrowDate" id="searchbyborrowdate" class="searchrecordinputs form-control searchbyborrowdate" placeholder="borrow date"/>
 <input name="expectedReturnDate" id="searchbyexpectedreturndate" class="searchrecordinputs form-control searchbyexpectedreturndate" placeholder="expected return date"/>
 <input name="returnDate" id="searchbyreturndate" class="searchrecordinputs form-control searchbyreturndate" placeholder="return date"/>
-<input name="returnstatus" id="searchbyreturnstatus" class="searchrecordinputs form-control searchbyreturnstatus" placeholder="return status"/>
+<select class="searchrecordinputs form-control searchbyreturnstatus" name="returnstatus" id="searchreturnstatus">
+    					<option class="form-control" selected value="">Return Status(ALL)</option>
+      					<option class="form-control" value="true">Returned</option>
+      					<option class="form-control" value="false">Not Returned</option>
+    				</select>
 <button type="submit" class="search-record-button btn btn-primary">Search Records</button>
 </div>
 </form>

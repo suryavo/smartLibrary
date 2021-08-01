@@ -117,7 +117,7 @@ public class UserDashboard {
 			bs.add(new BookSuggestion(b, avgrating, percentageRating, average));
 		}
 		
-		int min=5;
+		int min=4;
 		min=Math.min(min, bs.size());
 		
 		List<BookSuggestion> topfive=new ArrayList<>();

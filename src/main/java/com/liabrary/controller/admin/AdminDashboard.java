@@ -7,8 +7,11 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -434,6 +437,7 @@ public class AdminDashboard {
 			@RequestParam("borrowDate") String borrowDate,
 			@RequestParam("expectedReturnDate") String expectedReturnDate,
 			@RequestParam("returnDate") String returnDate,
+			@RequestParam("returnstatus") String returnstatus,
 			Model model, Principal principal, HttpSession session) {
 		
 		String userName=principal.getName();
@@ -447,33 +451,74 @@ public class AdminDashboard {
 		Date erd=null;
 		Date rd=null;
 		try {
-			bd=new SimpleDateFormat("yyyy-MM-dd").parse(borrowDate);
+			if(!borrowDate.equals("")) bd=new SimpleDateFormat("yyyy-MM-dd").parse(borrowDate);
 			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		try {
-			erd=new SimpleDateFormat("yyyy-MM-dd").parse(expectedReturnDate);
+			if(!expectedReturnDate.equals("")) erd=new SimpleDateFormat("yyyy-MM-dd").parse(expectedReturnDate);
 			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		try {
-			rd=new SimpleDateFormat("yyyy-MM-dd").parse(returnDate);
+			if(!returnDate.equals("")) rd=new SimpleDateFormat("yyyy-MM-dd").parse(returnDate);
 			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		
+		
 	    int book_id=0;
-		if(borrowDate.equals("")) borrowDate="null";
-		if(expectedReturnDate.equals("")) expectedReturnDate="null";
-		if(returnDate.equals("")) returnDate="null";
 		if(!bookid.equals("")) book_id=Integer.valueOf(bookid);
 		
-		List<TransactionRecord> tr=this.transactionRecordRepository.findbydate(u, borrowDate , expectedReturnDate, returnDate, book_id);
-		System.out.println(tr);
-		model.addAttribute("transactionRecords", tr);
-		System.out.println(email+" "+bookid+" "+borrowDate+" "+expectedReturnDate+" "+returnDate);
+		
+		List<TransactionRecord> trByUser=new ArrayList<>();
+		List<TransactionRecord> trByBook_id=new ArrayList<>();
+		List<TransactionRecord> trByBorrowDate=new ArrayList<>();
+		List<TransactionRecord> trByExpectedReturnDate=new ArrayList<>();
+		List<TransactionRecord> trByReturnDate=new ArrayList<>();
+		List<TransactionRecord> trByStatus=new ArrayList<>();
+		
+		if(email.equals("")) trByUser=this.transactionRecordRepository.findAll();
+		else trByUser=this.transactionRecordRepository.findRecordByUser(u);
+			
+		if(bookid.equals("")) trByBook_id=this.transactionRecordRepository.findAll();
+		else trByBook_id=this.transactionRecordRepository.findRecordByBookId(book_id);
+		
+		
+		if(borrowDate.equals("")) trByBorrowDate=this.transactionRecordRepository.findAll();
+		else trByBorrowDate=this.transactionRecordRepository.findRecordByBorrowDate(bd);
+		
+		if(expectedReturnDate.equals("")) trByExpectedReturnDate=this.transactionRecordRepository.findAll();
+		else trByExpectedReturnDate=this.transactionRecordRepository.findRecordByExpectedReturnDate(erd);
+		
+		if(returnDate.equals("")) trByReturnDate=this.transactionRecordRepository.findAll();
+		else trByReturnDate=this.transactionRecordRepository.findRecordByReturnDate(rd);
+		
+		if(returnstatus.equals("")) trByStatus=this.transactionRecordRepository.findAll();
+		else {
+			boolean b=false;
+			if(returnstatus.equals("true")) b=true;
+			trByStatus=this.transactionRecordRepository.findRecordByStatus(b);
+		}
+		
+		
+		HashSet<TransactionRecord> intersectionSet = new HashSet<>(trByUser);
+		intersectionSet.retainAll(new HashSet<TransactionRecord>(trByBook_id));
+		intersectionSet.retainAll(new HashSet<TransactionRecord>(trByBorrowDate));
+		intersectionSet.retainAll(new HashSet<TransactionRecord>(trByExpectedReturnDate));
+		intersectionSet.retainAll(new HashSet<TransactionRecord>(trByReturnDate));
+		intersectionSet.retainAll(new HashSet<TransactionRecord>(trByStatus));
+		
+		ArrayList<TransactionRecord> trlist=new ArrayList<TransactionRecord>();
+		for(TransactionRecord tr: intersectionSet) {
+			trlist.add(tr);
+		}
+		trlist.sort((a,b) -> a.getRecord_id()-b.getRecord_id());
+		
+		model.addAttribute("transactionRecords", trlist);
 		
 		return "/admin/viewtransactions";
 		
@@ -539,6 +584,39 @@ public class AdminDashboard {
 		
 		return "/admin/editTransactionRecords";
 		
+	}
+	
+}
+
+class TransactionRecordWithId{
+	private int record_id;
+	private TransactionRecord transactionRecord;
+	
+	public TransactionRecordWithId() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public TransactionRecordWithId(int record_id, TransactionRecord transactionRecord) {
+		super();
+		this.record_id = record_id;
+		this.transactionRecord = transactionRecord;
+	}
+
+	public int getRecord_id() {
+		return record_id;
+	}
+
+	public void setRecord_id(int record_id) {
+		this.record_id = record_id;
+	}
+
+	public TransactionRecord getTransactionRecord() {
+		return transactionRecord;
+	}
+
+	public void setTransactionRecord(TransactionRecord transactionRecord) {
+		this.transactionRecord = transactionRecord;
 	}
 	
 }
