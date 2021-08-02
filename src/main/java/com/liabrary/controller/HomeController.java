@@ -110,7 +110,7 @@ public class HomeController {
 
 			e.printStackTrace();
 			model.addAttribute("user", user);
-			session.setAttribute("message", new Message("Sorry! Something went wrong !! ", "alert-error"));
+			session.setAttribute("message", new Message("Sorry! Something went wrong !! ", "alert-danger"));
 			return "signup";
 		}
 		
