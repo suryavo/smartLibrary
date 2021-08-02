@@ -26,6 +26,7 @@
 				            <div class="stars-inner" th:style=" 'width: ' + ${book.percentagerating} + 'px; '"></div>
 				        </div>
 				        <span class="number-rating" th:text="${book.average}"></span>
+				        <span class="tota-number-rating" th:text="${'('+book.count+')'}" style="margin-left: -30px;"></span>
 					</div>
 		
 		

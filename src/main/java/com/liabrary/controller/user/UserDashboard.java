@@ -114,7 +114,7 @@ public class UserDashboard {
 			
 			
 			
-			bs.add(new BookSuggestion(b, avgrating, percentageRating, average));
+			bs.add(new BookSuggestion(b, avgrating, percentageRating, average, count));
 		}
 		
 		int min=4;
@@ -348,6 +348,7 @@ public class UserDashboard {
 		model.addAttribute("distinctRating", distinctRating);
 		model.addAttribute("book_count_in_library", book_count_in_library);
 		model.addAttribute("newbookstock", newbookstock);
+		model.addAttribute("count", count);
 		
 		model.addAttribute("pageid", 2);
 		
@@ -585,6 +586,7 @@ class BookSuggestion{
 	int rating;
 	int percentagerating;
 	String average;
+	int count;
 	
 	public BookSuggestion() {
 		super();
@@ -593,12 +595,13 @@ class BookSuggestion{
 
 	
 
-	public BookSuggestion(Book book, int rating, int percentagerating, String average) {
+	public BookSuggestion(Book book, int rating, int percentagerating, String average, int count) {
 		super();
 		this.book = book;
 		this.rating = rating;
 		this.percentagerating = percentagerating;
 		this.average = average;
+		this.count=count;
 	}
 
 
@@ -635,6 +638,19 @@ class BookSuggestion{
 	public void setAverage(String average) {
 		this.average = average;
 	}
+
+
+
+	public int getCount() {
+		return count;
+	}
+
+
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+	
 
 
 	

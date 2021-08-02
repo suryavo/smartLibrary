@@ -26,6 +26,7 @@
             <div class="stars-inner" th:style=" 'width: ' + ${percentageRating} + 'px;'"></div>
         </div>
         <span class="number-rating" th:text="${averageRating}"></span>
+        <span class="tota-number-rating" th:text="${'('+count+')'}"></span>
 		</div>
 
 		
@@ -52,6 +53,7 @@
 		            	<div class="stars-inner" th:style=" 'width: ' + ${rrl.rating} + 'px;'"></div>
 		        		</div>
 		        		<span class="number-rating" th:text="${rrl.rating}*5/100"></span>
+		        		
 				</div>
 				
 				<h7 th:text="${rrl.review}"></h7>
@@ -81,7 +83,9 @@
 			      
 			      <td>
 			      <form th:action="@{'/user/chat/'+${bs.user.user_id}}" >
-			      <button th:if="${bs.user.user_id!=user.user_id}" type="submit" class="btn btn-primary">send a message</button>
+			      <div th:if="${bs.user.user_id!=user.user_id}">
+			      <button type="submit" class="btn btn-primary">send a message</button>
+			      </div>
 			      </form>
 			      </td>
 			      
